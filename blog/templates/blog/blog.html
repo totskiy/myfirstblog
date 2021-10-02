@@ -1,7 +1,5 @@
 
 <!doctype html>
-
-{% load static %}
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -50,20 +48,20 @@
 <header>
   <nav class="navbar fixed-top navbar-expand-md navbar-light fst-italic" style="background-color: #8ed8d1de">
     <div class="container-fluid" >
-      <a class="navbar-brand" href="#">My First Blog</a>
+      <a class="navbar-brand" href="{% url 'home' %}">My First Blog</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav" >
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="{% static 'AboutMe.txt' %}">About Me</a>
+            <a class="nav-link" aria-current="page" href="#">About Me</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="https://www.linkedin.com/in/vladislav-totskiy-76a554173/" target="_blank">Linked In</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'showblog' %}">Blog</a>
+            <a class="nav-link" href="#">Blog</a>
           </li>
         </ul>
       </div>
@@ -71,41 +69,25 @@
   </nav>
 </header>
 
-<main style="margin-top: 50px;">
 
-  <section class="py-5 text-center container">
-    <div class="row py-lg-5">
-      <div class="col-lg-6 col-md-8 mx-auto">
-        
-        <p class="lead text-muted">Hey there i am excited to see you here! You can write me write now</p>
-        <p>
-          <a href="mailto:totskiy0070@gmail.com" class="btn btn-outline-secondary">Mail Me</a>
-          
-        </p>
-      </div>
-    </div>
-  </section>
+<main style="margin-top: 50px;" class="ps-5">
+    <h1 class="pt-5 ">Recent Posts</h1>
 
-  <div class="album py-5 bg-light">
-    <div class="container">
+  {% for post in posts.all %}
 
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        {% for event in events.all %}
-        <div class="col">
-          
-          <div class="card shadow-sm">
-            <img class="card-img-top"  src="{{ event.event_image.url }}" />
-            <div class="card-body">
-              <p class="card-text">{{ event.event_text }}</p>
-                
-            </div>
-          </div>
-          
-        </div>
-        {% endfor %}
-      </div>
-    </div>
-  </div>
+  <a href="{% url 'specific_post' post.id %}"><h2>{{ post.title }}</h2></a>
+
+  <br/>
+  <img src="{{ post.image.url }}" height=300 width=300 class="img-fluid"/>
+  <br/>
+
+  <p>{{ post.get_summary }}</p>
+  <p class="fst-italic">{{ post.date }}</p>
+  <br/>
+
+  {% endfor %}
+
+
 
 </main>
 
